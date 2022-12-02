@@ -14,7 +14,7 @@ const router = express.Router()
 // router.get('/', wrapper(ctrl.getAll))
 
 // Отримання інформації по категоріям трагзакцій
-// router.get('/categories', ctrl.getDate)
+router.get('/categories', ctrl.getCategories)
 
 // Отримання інформації по транзакціям за місяць(число) / рік(число) - якщо не вказали місяць. Без пагінації
 // router.get('/date', ctrl.getDate)

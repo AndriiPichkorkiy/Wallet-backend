@@ -1,23 +1,21 @@
 // Перші три цифри id - перша літера категорії в кодуванні ASC-II. Наступні - порядковий номер
 const categories = {
-	1011: "Basic expences",
-	1012: "Products",
-	1013: "Car",
-	1014: "Self care",
-	1015: "Child care",
-	1016: "Household products",
-	1017: "Education",
-	1018: "Leisure",
-	1019: "Other expencses",
+	10101: "Basic expences",
+	10102: "Products",
+	10103: "Car",
+	10104: "Self care",
+	10105: "Child care",
+	10106: "Household products",
+	10107: "Education",
+	10108: "Leisure",
+	10109: "Other expencses",
 	
 	10110: "Main",
+	10111: "Development",
+	10112: "Reset",
 	
-	10113: "Development",
-	
-	10117: "Reset",
-	
-	1051: "Regular Income",
-	1052: "Inregular Income",
+	10501: "Regular Income",
+	10502: "Inregular Income",
 	
 };
 
