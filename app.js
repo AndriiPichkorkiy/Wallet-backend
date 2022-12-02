@@ -4,7 +4,7 @@ const cors = require("cors");
 // const swaggerUi = require("swagger-ui-express");
 
 
-const usersRouter = require('./routes/api/auth')
+// const usersRouter = require('./routes/api/auth')
 const transactionsRouter = require('./routes/api/transactions')
 
 require("dotenv").config();

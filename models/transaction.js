@@ -16,49 +16,38 @@ const transactionSchema = new Schema({
     },
     category: {
         type: {
-            id: Schema.Types.Int32,
+            id: Number,
             name: String
         },
-        required: true
+        required: true,
+        versionKey: false,
     },
     comment: String,
     amount: {
-        type: Schema.Types.Decimal128,
+        type: Number,
         required: [true, 'Set the transaction amount']
     },
     
-    // balance: {
-    //     type: Schema.Types.Decimal128,
-    //     required: [true, 'Set the transaction balance']  
-    // },
-    // createdAt: {
-    //     type: Schema.Types.Data
-    // },
-    // year: {
-    //     type: Schema.Types.Int32,
-    // },
-    // month: {
-    //     type: Schema.Types.Int32,
-    // }
-
-},
-    { versionKey: false, timestamps: true }
+    balance: {
+        type: Number,
+        required: [true, 'Set the transaction balance']  
+    }
+},{ versionKey: false, timestamps: true }
 );
 
 const schemaAdd = Joi.object({
     type: Joi.boolean().required(),
     category: Joi.object({
-        id: Joi.number().integer(),
-        name: Joi.string()
+        id: Joi.number().integer().required(),
+        name: Joi.string().required()
     }).required(),
     comment: Joi.string(),
-    amount: Joi.number().positive().precision(2).required(),
+    amount: Joi.number().min(0).precision(2).required(),
 });
 
-const schemasJoiTransaction = {
+const schemasJoi = {
     schemaAdd,
 }
-
 
 transactionSchema.post("save", handleSchemaErrors);
 
@@ -66,6 +55,6 @@ const Transaction = model("transaction", transactionSchema);
 
 module.exports = {
     Transaction,
-    schemasJoiTransaction
+    schemasJoi
 
 }

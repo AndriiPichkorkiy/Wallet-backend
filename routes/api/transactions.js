@@ -1,13 +1,17 @@
 const express = require('express')
 const { wrapper } = require('../../helpers')
+const ctrl = require('../../controllers/transaction')
+const { validateBody } = require('../../middlewares')
+const {schemasJoi} = require('../../models/transaction')
+
 const router = express.Router()
-const ctrl = require('../../controllers/transaction');
-// const {ctrlWrapper} = require('../../helpers')
+
+
 
 // const {shemas} = require('../../models/transaction')
 
 // Отримання всіх транзакцій користувача (можливість пагінації).
-router.get('/', wrapper(ctrl.getAll))
+// router.get('/', wrapper(ctrl.getAll))
 
 // Отримання інформації по категоріям трагзакцій
 // router.get('/categories', ctrl.getDate)
@@ -16,7 +20,7 @@ router.get('/', wrapper(ctrl.getAll))
 // router.get('/date', ctrl.getDate)
 
 // Створення нової транзакції
-router.post('/', wrapper(ctrl.addTransaction))
+router.post('/', validateBody(schemasJoi.schemaAdd), wrapper(ctrl.addTransaction))
 
 
 module.exports = router;
