@@ -16,8 +16,14 @@ const transactionSchema = new Schema({
     },
     category: {
         type: {
-            id: Number,
-            name: String
+            id: {
+                type: Number,
+                required: true,
+            },
+            name: {
+                type: String,
+                required: [true, 'Category by id not found'],
+            }
         },
         required: true,
         versionKey: false,
@@ -37,12 +43,9 @@ const transactionSchema = new Schema({
 
 const schemaAdd = Joi.object({
     type: Joi.boolean().required(),
-    category: Joi.object({
-        id: Joi.number().integer().required(),
-        name: Joi.string().required()
-    }).required(),
-    comment: Joi.string(),
-    amount: Joi.number().min(0).precision(2).required(),
+    category: Joi.number().integer().required(),
+    comment: Joi.string().max(240),
+    amount: Joi.number().min(0).max(1000000000).precision(2).required(),
 });
 
 const schemasJoi = {
