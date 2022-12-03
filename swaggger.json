@@ -61,7 +61,7 @@
       }
     },
 
-    "/api/transactions/": {
+    "/api/transactions": {
       "post": {
         "tags": ["Transactions"],
         "summary": "Create a new transaction",
@@ -96,6 +96,31 @@
           "401": {
             "description": "Not authorized",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+
+    "/api/transactions/categories": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all categories and their id",
+        "parameters": [],
+        
+        "responses": {
+          "201": {
+            "description": "Get all categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCategory"
+                }
+              }
+            }
           },
           "500": {
             "description": "Server error",
@@ -246,8 +271,42 @@
                       "createdAt": "2022-12-03T14:18:04.624+00:00",
                       "updatedAt": "2022-12-03T14:18:04.624+00:00"
                     }
+      },
+      "GetCategory": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "description": "Transaction Category ID",
+              "example": 10501
+            },
+            "name": {
+              "type": "staring",
+              "description": "The name of the transaction category",
+              "example": "Regular Income"
+            }
+          }
+        },
+         "example":  [{
+                          "id": "10101",
+                          "name": "Basic expences"
+                      },
+                      {
+                          "id": "10102",
+                          "name": "Products"
+                      },
+                      {
+                          "id": "10103",
+                          "name": "Car"
+                      }]
       }
+
+
+
     },
+
     "securitySchemes": {
       "Bearer": {
         "type": "http",
