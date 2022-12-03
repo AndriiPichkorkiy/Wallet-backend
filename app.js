@@ -1,20 +1,32 @@
 const express = require("express");
+const logger = require("morgan");
+const cors = require("cors");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swaggger.json");
+const usersRouter = require("./routes/api/auth");
+// const transactionsRouter = require("./routes/api/transactions");
+
+require("dotenv").config();
+
 const app = express();
-const port = process.env.PORT || 3001;
 
-app.get("/", (req, res) => res.type("html").send(html));
-app.get("/test", (req, res) =>
-  res.json({ message: "Hello test adress", code: 1337 })
-);
+const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
-app.listen(port, () =>
-  console.log(
-    `Server app listening on port ${port}!\n LET'S DO AWESOME PROJECT!`
-  )
-);
+app.use(logger(formatsLogger));
+app.use(cors());
+app.use(express.json());
 
-const html = `
-    <body style="background-color: orange; height: 100vh;">
-        <h1> S.W.A.T. Team </h1>
-    </body>
-`;
+app.use("/api/user", usersRouter);
+// app.use("/api/transactions", transactionsRouter);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use((req, res) => {
+  res.status(404).json({ message: "Not found" });
+});
+
+app.use((err, req, res, next) => {
+  const { status = 500, message = "Server error" } = err;
+  res.status(status).json({ message });
+});
+
+module.exports = app;
