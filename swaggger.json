@@ -7,7 +7,7 @@
     },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3001" }, { "url": "https://wallet-project-m5us.onrender.com/" }],
+  "servers": [{ "url": "http://localhost:3001" }, { "url": "https://wallet-project-m5us.onrender.com" }],
   "tags": [
     {
       "name": "Auth",
@@ -24,7 +24,7 @@
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
+        
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -96,16 +96,11 @@
               "type": "string",
               "description": "User's email",
               "format": "email"
-            },
-            "userId": {
-              "type": "number",
-              "description": "User's id",
-              "example": "32143232436545474"
             }
           }
         },
         "example": 
-          { "name": "Taras Shevchenko","email": "example@gmail.com", "userId": "1" }
+          { "name": "Taras Shevchenko","email": "example@gmail.com" }
         }
     },
     "securitySchemes": {
