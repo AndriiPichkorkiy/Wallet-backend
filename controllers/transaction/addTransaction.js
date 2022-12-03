@@ -1,4 +1,4 @@
-const { requestError } = require('../../helpers');
+const { RequestError } = require('../../helpers');
 const { Transaction } = require('../../models/transaction');
 const categories = require('../../data/categories');
 
@@ -11,7 +11,7 @@ const addTransaction = async (req, res) => {
     const { category:id } = req.body;
     
     const data = await Transaction.create({ ...req.body, owner, balance, category: {id, name: categories[id]} });
-    if (!data) throw requestError(500, "Server error");
+    if (!data) throw RequestError(500, "Server error");
     
     res.status(201).json(data);
 }

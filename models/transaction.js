@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose');
 const Joi = require('joi');
-const { handleSchemaErrors } = require('../helpers');
+const { handleSaveErrors } = require('../helpers');
 
 
 const transactionSchema = new Schema({
@@ -52,7 +52,7 @@ const schemasJoi = {
     schemaAdd,
 }
 
-transactionSchema.post("save", handleSchemaErrors);
+transactionSchema.post("save", handleSaveErrors);
 
 const Transaction = model("transaction", transactionSchema);
 
