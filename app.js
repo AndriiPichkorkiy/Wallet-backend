@@ -1,14 +1,20 @@
 const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
-// const swaggerUi = require("swagger-ui-express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swaggger.json");
+const usersRouter = require("./routes/api/auth");
+// const transactionsRouter = require("./routes/api/transactions");
 
 
-// const usersRouter = require('./routes/api/auth')
-const transactionsRouter = require('./routes/api/transactions')
+
+
+
+
+const app = express();
+
 
 require("dotenv").config();
-const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 
