@@ -1,7 +1,6 @@
 const { User } = require("../../models/user");
-const { RequestError } = require("../../helpers");
+const { RequestError, sendEmail, createVerifyEmail } = require("../../helpers");
 const bcrypt = require("bcrypt");
-
 const { nanoid } = require("nanoid");
 
 const register = async (req, res) => {
@@ -18,9 +17,12 @@ const register = async (req, res) => {
     name,
     email,
     password: hashPassword,
-
     verificationToken,
   });
+
+  // const mail = createVerifyEmail(email, verificationToken);
+
+  await sendEmail(createVerifyEmail(email, verificationToken));
 
   res.status(201).json({ name: result.name, email: result.email });
 };
