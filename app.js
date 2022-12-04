@@ -4,7 +4,7 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swaggger.json");
 const usersRouter = require("./routes/api/auth");
-// const transactionsRouter = require("./routes/api/transactions");
+const transactionsRouter = require("./routes/api/transactions");
 
 require("dotenv").config();
 
@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/user", usersRouter);
-// app.use("/api/transactions", transactionsRouter);
+app.use("/api/transactions", transactionsRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use((req, res) => {
