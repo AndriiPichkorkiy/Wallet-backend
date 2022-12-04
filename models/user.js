@@ -63,8 +63,13 @@ const registerSchema = Joi.object({
     }),
 });
 
+const verifyEmailSchema = Joi.object({
+  email: Joi.string().pattern(emailRegex).required(),
+});
+
 const schemas = {
   registerSchema,
+  verifyEmailSchema,
   //   loginSchema,
 };
 

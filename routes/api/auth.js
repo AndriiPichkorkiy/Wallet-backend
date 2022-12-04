@@ -12,5 +12,11 @@ router.post(
   validateBody(schemas.registerSchema),
   ctrlWrapper(ctrl.register)
 );
+router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verify));
+router.post(
+  "/verify/",
+  validateBody(schemas.verifyEmailSchema),
+  ctrlWrapper(ctrl.resendEmail)
+);
 
 module.exports = router;
