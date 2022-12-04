@@ -1,4 +1,4 @@
-const { BASE_URL } = process.env;
+const { SERVER_URL } = process.env;
 
 const createTemplate = function (verificationToken) {
   return ` <!doctype html>
@@ -328,7 +328,7 @@ const createTemplate = function (verificationToken) {
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="${BASE_URL}/api/users/verify/${verificationToken}" target="_blank">Click verify email</a> </td>
+                                      <td> <a href="${SERVER_URL}/api/users/verify/${verificationToken}" target="_blank">Click verify email</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
