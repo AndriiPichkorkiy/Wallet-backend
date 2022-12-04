@@ -330,10 +330,15 @@ const createTemplate = function (verificationToken) {
                                     <tr>
                                       <td> <a href="${SERVER_URL}/api/users/verify/${verificationToken}" target="_blank">Click verify email</a>
                                       <p>
+                                      </td>
+                                      
+                                      
+                                    </tr>
+                                    <tr>
+                                      <td>
                                       or copy reference below into your web browser line:</p>
-                                      <p>${SERVER_URL}/api/users/verify/${verificationToken}</p></td>
-                                      
-                                      
+                                        <p>${SERVER_URL}/api/users/verify/${verificationToken}</p>
+                                      </td>
                                     </tr>
                                   </tbody>
                                 </table>
