@@ -332,18 +332,14 @@ const createTemplate = function (verificationToken) {
                                       
                                       </td>
                                     </tr>
-                                    <tr>
-                                      <td>
-                                      <p>or copy reference below into your web browser line:</p>
-                                        <p>${SERVER_URL}/api/users/verify/${verificationToken}</p>
-                                      </td>
-                                    </tr>
                                   </tbody>
                                 </table>
                               </td>
                             </tr>
                           </tbody>
                         </table>
+                         <p>or copy reference below into your web browser line:</p>
+                                        <p>${SERVER_URL}/api/users/verify/${verificationToken}</p>
                         <p>Verifying your email address enables to use <a href="https://luxury-klepon-24ab7b.netlify.app/">S.W.A.T Wallet</a> </p>
                       </td>
                     </tr>
