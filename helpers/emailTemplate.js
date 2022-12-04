@@ -328,7 +328,12 @@ const createTemplate = function (verificationToken) {
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="${SERVER_URL}/api/users/verify/${verificationToken}" target="_blank">Click verify email</a> </td>
+                                      <td> <a href="${SERVER_URL}/api/users/verify/${verificationToken}" target="_blank">Click verify email</a>
+                                      <p>
+                                      or copy reference below into your web browser line:</p>
+                                      <p>${SERVER_URL}/api/users/verify/${verificationToken}</p></td>
+                                      
+                                      
                                     </tr>
                                   </tbody>
                                 </table>
