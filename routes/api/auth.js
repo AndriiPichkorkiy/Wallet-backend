@@ -19,4 +19,9 @@ router.post(
   ctrlWrapper(ctrl.resendEmail)
 );
 
+// sign in
+router.get("/login", validateBody(schemas.loginSchema), ctrl.login);
+// router.get("/current", authenticate, ctrl.getCurrent);
+// router.get("/logout", authenticate, ctrl.logout);
+
 module.exports = router;

@@ -5,6 +5,22 @@ const { handleSaveErrors } = require("../helpers");
 const emailRegex =
   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}$/;
 
+const emailJoiSchema = Joi.string()
+  .pattern(emailRegex)
+  .min(6)
+  .max(63)
+  .required()
+  .email({
+    tlds: {
+      deny: ["ru", "su", "рус", "рф"],
+    },
+  })
+  .messages({
+    "string.domain": `"wallet not for terrorists: .ru, .su, .рус, .рф, etc`,
+  });
+
+const passwordJoiSchema = Joi.string().min(6).max(16).required();
+
 const userSchema = new Schema(
   {
     name: {
@@ -47,30 +63,23 @@ const userSchema = new Schema(
 
 const registerSchema = Joi.object({
   name: Joi.string().required(),
-  password: Joi.string().min(6).max(16).required(),
-  email: Joi.string()
-    .pattern(emailRegex)
-    .min(6)
-    .max(63)
-    .required()
-    .email({
-      tlds: {
-        deny: ["ru", "su", "рус", "рф"],
-      },
-    })
-    .messages({
-      "string.domain": `"wallet not for terrorists: .ru, .su, .рус, .рф, etc`,
-    }),
+  password: passwordJoiSchema,
+  email: emailJoiSchema,
 });
 
 const verifyEmailSchema = Joi.object({
-  email: Joi.string().pattern(emailRegex).required(),
+  email: emailJoiSchema,
+});
+
+const loginSchema = Joi.object({
+  password: passwordJoiSchema,
+  email: emailJoiSchema,
 });
 
 const schemas = {
   registerSchema,
   verifyEmailSchema,
-  //   loginSchema,
+  loginSchema,
 };
 
 userSchema.post("save", handleSaveErrors);
