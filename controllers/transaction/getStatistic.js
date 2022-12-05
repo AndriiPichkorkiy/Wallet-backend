@@ -16,6 +16,7 @@ const getStatistic= async (req, res) => {
         { $sort: { count: -1, '_id.year': -1, '_id.month': -1 } }
     ]);
 
+    
     res.json(data);
 }
 
