@@ -1,7 +1,7 @@
 const { Transaction } = require('../../models/transaction')
 
 
-const getDate = async (req, res) => {
+const getStatistic= async (req, res) => {
     console.log('getDate');
     const data = await Transaction.aggregate([
         {
@@ -19,4 +19,4 @@ const getDate = async (req, res) => {
     res.json(data);
 }
 
-module.exports = getDate;
+module.exports = getStatistic;
