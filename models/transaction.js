@@ -37,8 +37,13 @@ const transactionSchema = new Schema({
     balance: {
         type: Number,
         required: [true, 'Set the transaction balance']  
+    },
+
+    date: {
+        type: Date,
+        required: [true, 'Set the transaction date']  
     }
-},{ versionKey: false, timestamps: true }
+},{ versionKey: false}
 );
 
 const schemaAdd = Joi.object({
@@ -46,6 +51,7 @@ const schemaAdd = Joi.object({
     category: Joi.number().integer().required(),
     comment: Joi.string().max(240),
     amount: Joi.number().min(0).max(1000000000).precision(2).required(),
+    date: Joi.date()
 });
 
 const schemasJoi = {
