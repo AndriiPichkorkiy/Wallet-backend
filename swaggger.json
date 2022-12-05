@@ -14,10 +14,21 @@
       "description": "Authorization endpoints"
     }, 
     {
+      "name": "User",
+      "description": "Users endpoints"
+    },
+    {
       "name": "Transactions",
       "description": "Transactions endpoints"
     }
   ],
+
+
+
+
+
+
+
 
 
   "paths": {
@@ -60,6 +71,136 @@
         }
       }
     },
+
+"/api/user/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User login",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or Password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+"/api/user/logout": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User logout",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "No token provided",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Invalid user / Invalid session",
+            "content": {}
+          }
+        }
+      }
+    },
+"/api/user/current": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user's data by access token",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized (invalid access token)",
+            "content": {}
+          },
+          "404": {
+            "description": "Invalid user / Invalid session",
+            "content": {}
+          }
+        }
+      }
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     "/api/transactions": {
       "post": {
@@ -133,6 +274,13 @@
 
   
 
+
+
+
+
+
+
+
   "components": {
     "schemas": {
       "RegistrationRequest": {
@@ -176,6 +324,69 @@
         "example": 
           { "name": "Taras Shevchenko","email": "example@gmail.com" }
       },
+      
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+            "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        
+          "properties": {
+              "token": {
+              "type": "string",
+              "description": "User's token",
+              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOGM5YjlmZjk0NzA1ODkwMDdkNjgzMiIsImlhdCI6MTY3MDE2OTc4NiwiZXhwIjoxNjcwNDI4OTg2fQ.9UZpIe3YnRQBabhNLENrqQ2bkoTvDgH7WZMCaIVWBKc"
+            
+          }
+        }
+      
+      },
+       "CurrentUserResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "Taras Shevchenko"
+          },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            }
+          }
+        },
+        "example": 
+          { "name": "Taras Shevchenko","email": "example@gmail.com" }
+      },
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
 
       "RequestCreateTransaction": {
         "type": "object",
@@ -302,10 +513,18 @@
                           "name": "Car"
                       }]
       }
-
-
-
     },
+
+
+
+
+
+
+
+
+
+
+
 
     "securitySchemes": {
       "Bearer": {
