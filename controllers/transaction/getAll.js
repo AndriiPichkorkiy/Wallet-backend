@@ -1,10 +1,11 @@
+const { Transaction } = require('../../models/transaction')
 
 const getAll = async (req, res) => {
-    const data = {
-        message: "You make positive query. Success!"
-    }
+    const owner = req.user._id;
+    const { page = 1, limit = 5 } = req.query;
+    const skip = (page - 1) * limit;
+    const data = await Transaction.find({owner}, "", {skip, limit})
     res.json(data)
-    
 }
 
 module.exports = getAll;
