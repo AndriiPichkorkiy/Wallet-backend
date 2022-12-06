@@ -20,7 +20,7 @@ router.post(
 );
 
 // sign in
-router.get(
+router.post(
   "/login",
   validateBody(schemas.loginSchema),
   ctrlWrapper(ctrl.login)
