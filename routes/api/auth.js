@@ -12,9 +12,9 @@ router.post(
   validateBody(schemas.registerSchema),
   ctrlWrapper(ctrl.register)
 );
-router.get("/verify/:verificationToken", ctrlWrapper(ctrl.verify));
+router.post("/verify/:verificationToken", ctrlWrapper(ctrl.verify));
 router.post(
-  "/verify/",
+  "/verify",
   validateBody(schemas.verifyEmailSchema),
   ctrlWrapper(ctrl.resendEmail)
 );
