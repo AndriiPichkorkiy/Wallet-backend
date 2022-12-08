@@ -4,6 +4,7 @@ const verify = require("./verify");
 const resendEmail = require("./resendEmail");
 const getCurrent = require("./getCurrent");
 const logout = require("./logout");
+const del = require("./delete");
 
 module.exports = {
   register,
@@ -12,4 +13,5 @@ module.exports = {
   login,
   getCurrent,
   logout,
+  delete: del,
 };

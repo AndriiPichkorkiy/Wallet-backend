@@ -7,6 +7,7 @@ const { schemas } = require("../../models/user");
 const router = express.Router();
 
 // sign up
+router.delete("/", ctrlWrapper(ctrl.delete));
 router.post(
   "/register",
   validateBody(schemas.registerSchema),
