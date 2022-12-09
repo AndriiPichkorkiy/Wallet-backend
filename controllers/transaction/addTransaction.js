@@ -14,7 +14,7 @@ const addTransaction = async (req, res) => {
     const variety = type ? "income" : "expenses";
     const name = categories[variety][id];
     if (!name) throw RequestError(400, "No category with this type found"); 
-    const dec = amount * 10000 % 100; console.log('dec', dec)
+    const dec = amount * 10000 % 100; 
     if (dec != 0) throw RequestError(400, "More than 2 decimal places")
 
     let currentBalance = type ? balance + amount : balance - amount;
