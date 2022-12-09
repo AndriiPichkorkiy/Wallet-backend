@@ -336,7 +336,8 @@ const createTemplate = function (verificationToken) {
                             </tr>
                           </tbody>
                         </table>
-                        <p>Verifying your email address enables to use <a href="https://luxury-klepon-24ab7b.netlify.app">S.W.A.T Wallet</a> </p>
+                        <br />
+                        <p style={}>Verifying your email address enables to use <a href="https://luxury-klepon-24ab7b.netlify.app">S.W.A.T Wallet</a> </p>
                       </td>
                     </tr>
                   </table>
