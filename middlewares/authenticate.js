@@ -6,6 +6,7 @@ const { SECRET_KEY_JWT } = process.env;
 const anthenticate = async (req, res, next) => {
   try {
     const { authorization } = req.headers;
+    if (!authorization) throw RequestError(401);
     const [bearer, token] = authorization.split(" ");
     if (bearer !== "Bearer") {
       throw RequestError(401);

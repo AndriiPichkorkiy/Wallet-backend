@@ -1,4 +1,4 @@
-const { RequestError } = require('../../helpers');
+const { RequestError, round } = require('../../helpers');
 const { Transaction } = require('../../models/transaction');
 const { User } = require('../../models/user')
 const categories = require('../../data/categories');
@@ -19,7 +19,7 @@ const addTransaction = async (req, res) => {
 
     let currentBalance = type ? balance + amount : balance - amount;
     
-    currentBalance = Math.round(currentBalance * 100) / 100;
+    currentBalance = round(currentBalance);
 
     // Перевіряємо, чи не перевищує значення дати поточного значення
     const now = new Date();

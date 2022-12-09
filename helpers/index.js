@@ -3,7 +3,8 @@ const handleSaveErrors = require("./handleSaveErrors");
 const ctrlWrapper = require("./ctrlWrapper");
 const createVerifyEmail = require("./createVerifyEmail");
 const sendEmail = require("./sendEmail");
-const getDates = require("./getDates")
+const getDates = require("./getDates");
+const round = require('./round');
 
 module.exports = {
   RequestError,
@@ -11,5 +12,6 @@ module.exports = {
   ctrlWrapper,
   createVerifyEmail,
   sendEmail,
-  getDates
+  getDates,
+  round
 };
