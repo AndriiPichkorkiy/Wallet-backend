@@ -326,7 +326,7 @@ const createTemplate = function (verificationToken) {
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a href="luxury-klepon-24ab7b.netlify.app/api/user/verify/${verificationToken}" target="_blank">Click verify email</a>
+                                      <td> <a href="https://luxury-klepon-24ab7b.netlify.app/api/user/verify/${verificationToken}" target="_blank">Click verify email</a>
                                       
                                       </td>
                                     </tr>
@@ -336,7 +336,13 @@ const createTemplate = function (verificationToken) {
                             </tr>
                           </tbody>
                         </table>
-                        <p>Verifying your email address enables to use <a href="https://luxury-klepon-24ab7b.netlify.app">S.W.A.T Wallet</a> </p>
+                        <br />
+                        <p>
+                          Or follow this adress:
+                          </br>
+                          https://luxury-klepon-24ab7b.netlify.app/api/user/verify/${verificationToken}
+                        </p>
+                        <p style={}>Verifying your email address enables to use <a href="https://luxury-klepon-24ab7b.netlify.app">S.W.A.T Wallet</a> </p>
                       </td>
                     </tr>
                   </table>

@@ -4,15 +4,22 @@
     "version": "1.0.2",
     "title": "Swagger S.W.A.T Wallet",
     "description": "It's Bible of API S.W.A.T Wallet based on OpenAPI 3.0.1"
-    },
+  },
   "consumes": ["application/json"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3001" }, { "url": "https://wallet-project-m5us.onrender.com" }],
+  "servers": [
+    {
+      "url": "http://localhost:3001"
+    },
+    {
+      "url": "https://wallet-project-m5us.onrender.com"
+    }
+  ],
   "tags": [
     {
       "name": "Auth",
       "description": "Authorization endpoints"
-    }, 
+    },
     {
       "name": "User",
       "description": "Users endpoints"
@@ -22,16 +29,12 @@
       "description": "Transactions endpoints"
     }
   ],
-
-
-
   "paths": {
     "/api/user/register": {
       "post": {
         "tags": ["Auth"],
         "summary": "User registration",
         "parameters": [],
-        
         "requestBody": {
           "description": "Registration's object",
           "required": true,
@@ -65,12 +68,9 @@
         }
       }
     },
-
-"/api/user/login": {
+    "/api/user/login": {
       "post": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User login",
         "parameters": [],
         "security": [
@@ -107,11 +107,9 @@
         }
       }
     },
-"/api/user/logout": {
+    "/api/user/logout": {
       "get": {
-        "tags": [
-          "Auth"
-        ],
+        "tags": ["Auth"],
         "summary": "User logout",
         "parameters": [],
         "security": [
@@ -138,11 +136,9 @@
         }
       }
     },
-"/api/user/current": {
+    "/api/user/current": {
       "get": {
-        "tags": [
-          "User"
-        ],
+        "tags": ["User"],
         "summary": "Get user's data by access token",
         "security": [
           {
@@ -172,133 +168,161 @@
         }
       }
     },
-
-
-  "/api/transactions": {
-    "post": {
-      "tags": [
-        "Transactions"
-      ],
-      "summary": "Create a new transaction",
-      "security": [
-        {
-          "Bearer": []
+    "/api/user/": {
+      "delete": {
+        "tags": ["Auth"],
+        "summary": "Delete user",
+        "parameters": [],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "requestBody": {
+          "description": "Delete's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email is wrong",
+            "content": {}
+          }
         }
-      ],
-      "parameters": [],
-      "requestBody": {
-        "description": "Create object",
-        "required": true,
-        "content": {
-          "application/json": {
+      }
+    },
+    "/api/transactions": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Create a new transaction",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Create object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatedTransactionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedTransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "401": {
+            "description": "Not authorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/transactions/getAll": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all user transactions",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
             "schema": {
-              "$ref": "#/components/schemas/CreatedTransactionRequest"
-            }
+              "type": "integer"
+            },
+            "description": "Page number for pagination"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The numbers of items to return"
           }
-        }
-      },
-      "responses": {
-        "201": {
-          "description": "Successful created",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreatedTransactionResponse"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAllTransactions"
+                }
               }
             }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
-        },
-        "400": {
-          "description": "Bad request (invalid request body)",
-          "content": {}
-        },
-        "401": {
-          "description": "Not authorized",
-          "content": {}
-        },
-        "500": {
-          "description": "Server error",
-          "content": {}
+        }
+      }
+    },
+    "/api/transactions/categories": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get all categories and their id",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Get all categories",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCategory"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
         }
       }
     }
   },
-  "/api/transactions/getAll": {
-    "get": {
-      "tags": [
-        "Transactions"
-      ],
-      "summary": "Get all user transactions",
-      "security": [
-        {
-          "Bearer": []
-        }
-      ],
-      "parameters": [
-        {
-          "in": "query",
-          "name": "page",
-          "schema": {
-            "type": "integer"
-          },
-          "description": "Page number for pagination"
-        },
-        {
-          "in": "query",
-          "name": "limit",
-          "schema": {
-            "type": "integer"
-          },
-          "description": "The numbers of items to return"
-        }
-      ],
-      "responses": {
-        "200": {
-          "description": "Successful",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetAllTransactions"
-              }
-            }
-          }
-        },
-        "500": {
-          "description": "Server error",
-          "content": {}
-        }
-      }
-    }
-  },
-  "/api/transactions/categories": {
-    "get": {
-      "tags": [
-        "Transactions"
-      ],
-      "summary": "Get all categories and their id",
-      "parameters": [],
-      "responses": {
-        "200": {
-          "description": "Get all categories",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetCategory"
-              }
-            }
-          }
-        },
-        "500": {
-          "description": "Server error",
-          "content": {}
-        }
-      }
-    }
-  }
-},
-
-
-
   "components": {
     "schemas": {
       "RegistrationRequest": {
@@ -328,10 +352,10 @@
           "type": "object",
           "properties": {
             "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "Taras Shevchenko"
-          },
+              "type": "string",
+              "description": "User's name",
+              "example": "Taras Shevchenko"
+            },
             "email": {
               "type": "string",
               "description": "User's email",
@@ -339,15 +363,16 @@
             }
           }
         },
-        "example": 
-          { "name": "Taras Shevchenko","email": "example@gmail.com" }
+        "example": {
+          "name": "Taras Shevchenko",
+          "email": "example@gmail.com"
+        }
       },
-      
       "LoginRequest": {
         "type": "object",
         "required": ["email", "password"],
         "properties": {
-            "email": {
+          "email": {
             "type": "string",
             "description": "User's email",
             "format": "email"
@@ -361,27 +386,51 @@
       },
       "LoginResponse": {
         "type": "object",
-        
-          "properties": {
-              "token": {
-              "type": "string",
-              "description": "User's token",
-              "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOGM5YjlmZjk0NzA1ODkwMDdkNjgzMiIsImlhdCI6MTY3MDE2OTc4NiwiZXhwIjoxNjcwNDI4OTg2fQ.9UZpIe3YnRQBabhNLENrqQ2bkoTvDgH7WZMCaIVWBKc"
-            
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOGM5YjlmZjk0NzA1ODkwMDdkNjgzMiIsImlhdCI6MTY3MDE2OTc4NiwiZXhwIjoxNjcwNDI4OTg2fQ.9UZpIe3YnRQBabhNLENrqQ2bkoTvDgH7WZMCaIVWBKc"
           }
         }
-      
       },
-       "CurrentUserResponse": {
+      "DeleteRequest": {
+        "type": "object",
+        "required": ["email"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      },
+      "DeleteResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "message",
+              "example": "example@example.com was deleted"
+            }
+          }
+        },
+        "example": {
+          "message": "example@example.com was deleted"
+        }
+      },
+      "CurrentUserResponse": {
         "type": "array",
         "items": {
           "type": "object",
           "properties": {
             "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "Taras Shevchenko"
-          },
+              "type": "string",
+              "description": "User's name",
+              "example": "Taras Shevchenko"
+            },
             "email": {
               "type": "string",
               "description": "User's email",
@@ -389,20 +438,14 @@
             }
           }
         },
-        "example": 
-          { "name": "Taras Shevchenko","email": "example@gmail.com" }
+        "example": {
+          "name": "Taras Shevchenko",
+          "email": "example@gmail.com"
+        }
       },
-      
-      
-         
       "CreatedTransactionRequest": {
         "type": "object",
-        "required": [
-          "type",
-          "amount",
-          "category",
-          "date"
-        ],
+        "required": ["type", "amount", "category", "date"],
         "properties": {
           "type": {
             "type": "boolean",
@@ -483,10 +526,10 @@
               "example": 3344.55
             },
             "date": {
-            "type": "number",
-            "description": "Transaction creation date, ms",
-            "example": "2022-12-03T14:18:04.624+00:00"
-          }
+              "type": "number",
+              "description": "Transaction creation date, ms",
+              "example": "2022-12-03T14:18:04.624+00:00"
+            }
           }
         },
         "example": {
@@ -629,9 +672,6 @@
         ]
       }
     },
-
-
-
     "securitySchemes": {
       "Bearer": {
         "type": "http",
