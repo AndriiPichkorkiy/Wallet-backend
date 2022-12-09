@@ -9,8 +9,6 @@ const addTestTransactions = async (req, res) => {
     let dateMs = new Date(year, month, day) - new Date(0);
     const { _id, name: userName } = req.user;
     
-
-
    for (let i = 1; i <= (quantity); i += 1) {
         const { balance } = await User.findById(_id);
         if (balance === undefined) throw RequestError(500, "Server error");
@@ -34,11 +32,9 @@ const addTestTransactions = async (req, res) => {
         dateMs = dateMs + differentDateMs;
         
         const date = new Date(dateMs)
-        
-
+    
         const comment = `User: ${userName}. Transaction № ${i}`;
 
-        
         let currentBalance = type ? balance + amount : balance - amount;
         
         //Відкидаємо дробову частину
@@ -52,12 +48,9 @@ const addTestTransactions = async (req, res) => {
         
         const data = await Transaction.create({  owner: _id, type, category, comment, amount, balance: currentBalance,  date });
         if (!data) throw RequestError(500, "Server error");
-    
-
     }
 
     res.status(201).json({"message": "Success"});
-   
 }
 
 module.exports = addTestTransactions;

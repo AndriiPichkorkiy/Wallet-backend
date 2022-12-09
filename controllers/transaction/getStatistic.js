@@ -46,18 +46,15 @@ const getStatistic = async (req, res) => {
         if (Number(categoryId) > 10500) { income = income + quantity }
         else { expenses = expenses + obj.quantity; stats.push({id: categoryId, name: categories.expenses[categoryId], quantity })}
     }
-
-    const result = {
+  
+    res.json({
         stats,
         totalStats: {
             expenses,
             income,
             totalBalance
         }
-    }
-                
-    res.json(result)
-    
+    })
 }
 
 
