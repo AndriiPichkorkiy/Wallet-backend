@@ -440,7 +440,8 @@
             "in": "query",
             "name": "number",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "default": 1
             },
             "description": "Number of transactions to create"
           },
@@ -448,8 +449,7 @@
             "in": "query",
             "name": "sum",
             "schema": {
-              "type": "integer",
-              "default": 1
+              "type": "integer"
             },
             "description": "Sets the balance for the user before starting to create transactions."
           }
@@ -747,10 +747,17 @@
           },
           "category": {
             "type": "object",
-            "description": "category ID and name",
-            "example": {
-              "id": 10502,
-              "name": "Inregular Income"
+            "properties": {
+              "id": {
+                "type": "number",
+                "description": "Category ID",
+                "example": 10502
+              },
+              "name": {
+                "type": "string",
+                "description": "Category name",
+                "example": "Inregular Income"
+              }
             }
           },
           "comment": {
