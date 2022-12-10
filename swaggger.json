@@ -351,7 +351,7 @@
         "tags": [
           "Transactions"
         ],
-        "summary": "Get statistics of income and expenses by category for a period of time",
+        "summary": "Get statistics of income and expenses by category for a period of time.",
         "security": [
           {
             "Bearer": []
@@ -364,7 +364,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "The year to get the statistics from, a number from 1967 to the current year's value."
+            "description": "The year to get the statistics from, a number from 1970 to the current year's value. The default is the current year. The default is the current month."
           },
           {
             "in": "query",
@@ -372,7 +372,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "Ordinal number of the month, from 1 to 12. Optional."
+            "description": "Ordinal number of the month, from 1 to 12. Optional. If the year is not passed, it defaults to the current month."
           }
         ],
         "responses": {
@@ -385,6 +385,89 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/transactions/test": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Automatic creation of user test transactions",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer",
+              "default": 2022
+            },
+            "description": "Year of transaction, from 1970 to the present."
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer",
+              "default": 11
+            },
+            "description": "The initial month of creating transactions, from 1 to 12."
+          },
+          {
+            "in": "query",
+            "name": "day",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Day of creation of the first transaction, from 1 to 30 (28 / 29 / 31)."
+          },
+          {
+            "in": "query",
+            "name": "number",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Number of transactions to create"
+          },
+          {
+            "in": "query",
+            "name": "sum",
+            "schema": {
+              "type": "integer",
+              "default": 1
+            },
+            "description": "Sets the balance for the user before starting to create transactions."
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatedTestTransactions"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (Invalid Date)",
+            "content": {}
           },
           "401": {
             "description": "Unauthorized",
@@ -832,6 +915,19 @@
             "income": 18443.15,
             "totalBalance": 21670.59
           }
+        }
+      },
+      "CreatedTestTransactions": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The operation was successful",
+            "example": "Success"
+          }
+        },
+        "example": {
+          "message": "Success"
         }
       }
     },
