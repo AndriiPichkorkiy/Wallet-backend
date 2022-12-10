@@ -32,9 +32,7 @@ const getStatistic = async (req, res) => {
             quantity: "$quantity"
         },
     },
-    ]);
-
-    const sortData = data.sort((a, b) => a.categoryId - b.categoryId);
+    ]).sort({categoryId: 1});
 
     const { balance: totalBalance } = await User.findById(_id);
     if (totalBalance === undefined) throw RequestError(500, "Server error");
@@ -43,7 +41,7 @@ const getStatistic = async (req, res) => {
     let expenses = 0;
     let income  = 0;
     
-    for (const obj of sortData) {
+    for (const obj of data) {
         let { categoryId } = obj;
         quantity = round(obj.quantity);
         if (Number(categoryId) > 10500) { income = round(income + quantity) }
