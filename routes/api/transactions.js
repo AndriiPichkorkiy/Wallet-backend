@@ -10,6 +10,9 @@ const router = express.Router()
 // Створення нової транзакції
 router.post('/', authenticate, validateBody(schemasJoi.schemaAdd), ctrlWrapper(ctrl.addTransaction))
 
+// Створення групи тестових транзакцій
+router.post('/test', authenticate, ctrlWrapper(ctrl.addTestTransactions))
+
 // Отримання всіх транзакцій користувача (можливість пагінації).
 router.get('/getAll', authenticate,  ctrlWrapper(ctrl.getAll))
 
