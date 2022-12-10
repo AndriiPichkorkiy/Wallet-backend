@@ -9,13 +9,15 @@ const addTransaction = async (req, res) => {
     const { balance } = await User.findById(_id);
     if (balance === undefined) throw RequestError(500, "Server error");
     
-    const { category: id, date, type, amount } = req.body;
-
+    const { category: id, date, type } = req.body;
+    let {amount} = req.body;
+    if (typeof(amount) === "string") amount = Number(amount);
+    
     const variety = type ? "income" : "expenses";
     const name = categories[variety][id];
-    if (!name) throw RequestError(400, "No category with this type found"); 
+    if (!name) throw RequestError(400, "No category with this type found"); console.log("amount", amount);
     const dec = amount * 10000 % 100; 
-    if (dec !== 0) throw RequestError(400, "More than 2 decimal places")
+    if (dec !== 0) throw RequestError(400, "More than 2 decimal places"); console.log("amount", amount);
 
     let currentBalance = type ? balance + amount : balance - amount;
     
@@ -24,7 +26,7 @@ const addTransaction = async (req, res) => {
     // Перевіряємо, чи не перевищує значення дати поточного значення
     const now = new Date();
     if (date >= now) throw RequestError(400, "Invalid date");
-
+    
     await User.findByIdAndUpdate(_id, {balance: currentBalance}, {new: true})
     
     const data = await Transaction.create({ ...req.body, owner: _id, balance: currentBalance, category: {id, name}});
