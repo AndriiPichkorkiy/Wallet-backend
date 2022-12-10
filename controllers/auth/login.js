@@ -8,8 +8,11 @@ const { SECRET_KEY_JWT } = process.env;
 const login = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if (!user || !user.verify) {
+  if (!user) {
     throw RequestError(401, "Email or password wrong");
+  }
+  if (!user.verify) {
+    throw RequestError(401, "Please verify your email");
   }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
