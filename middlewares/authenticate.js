@@ -8,9 +8,11 @@ const anthenticate = async (req, res, next) => {
     const { authorization } = req.headers;
     if (!authorization) throw RequestError(401);
     const [bearer, token] = authorization.split(" ");
+    
     if (bearer !== "Bearer") {
       throw RequestError(401);
     }
+    if (!token) throw RequestError(401, "token invalid data");
     const { id } = jwt.verify(token, SECRET_KEY_JWT);
     const user = await User.findById(id);
     if (!user || user.token !== token) {
