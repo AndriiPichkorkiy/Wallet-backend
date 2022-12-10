@@ -2,6 +2,7 @@ const { model, Schema } = require('mongoose');
 const Joi = require('joi');
 const { handleSaveErrors } = require('../helpers');
 
+const nowYear = new Date().getFullYear();
 
 const transactionSchema = new Schema({
     owner: {
@@ -50,12 +51,33 @@ const schemaAdd = Joi.object({
     type: Joi.boolean().required(),
     category: Joi.number().integer().required(),
     comment: Joi.string().max(240),
-    amount: Joi.number().min(0).max(1000000000).precision(2).required(),
+    amount: Joi.number().precision(2).min(0).max(1000000000).required(),
     date: Joi.date()
 });
 
+const schemaGetAll = Joi.object({
+    page: Joi.number(),
+    limit: Joi.number()
+});
+
+const schemaGetStatistic = Joi.object({
+    year: Joi.number().min(1970).max(nowYear),
+    month: Joi.number().min(1).max(12)
+});
+
+const schemaPostTestTransactions = Joi.object({
+    year: Joi.number().min(1970).max(nowYear),
+    month: Joi.number().min(1).max(12),
+    day: Joi.number().min(1).max(31),
+    number: Joi.number().min(1).max(50),
+    sum: Joi.number().min(1).max(20000),
+})
+
 const schemasJoi = {
     schemaAdd,
+    schemaGetStatistic,
+    schemaGetAll,
+    schemaPostTestTransactions
 }
 
 transactionSchema.post("save", handleSaveErrors);
@@ -65,5 +87,4 @@ const Transaction = model("transaction", transactionSchema);
 module.exports = {
     Transaction,
     schemasJoi
-
 }

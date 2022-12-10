@@ -8,8 +8,9 @@ const categories = require('../../data/categories');
 const getStatistic = async (req, res) => {
     const { _id } = req.user;
     const { year, month } = req.query;
-    const { startDate, endDate } = getDates(Number(year), Number(month));
-    
+
+    const { startDate, endDate } = getDates(year, month);
+
     const data = await Transaction.aggregate([
     {
         $match: {
@@ -58,6 +59,5 @@ const getStatistic = async (req, res) => {
         }
     })
 }
-
 
 module.exports = getStatistic;
