@@ -69,7 +69,7 @@ const schemaPostTestTransactions = Joi.object({
     year: Joi.number().min(1970).max(nowYear),
     month: Joi.number().min(1).max(12),
     day: Joi.number().min(1).max(31),
-    number: Joi.number().min(1).max(50),
+    number: Joi.number().min(1).max(120),
     sum: Joi.number().min(1).max(20000),
 })
 
