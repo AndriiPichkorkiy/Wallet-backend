@@ -39,22 +39,6 @@ const addTransaction = async (req, res) => {
   });
   if (!data) throw RequestError(500, "Server error");
 
-  currentBalance = Math.round(currentBalance * 100) / 100;
-
-  // Перевіряємо, чи не перевищує значення дати поточного значення
-  const now = new Date();
-  if (date >= now) throw RequestError(400, "Invalid date");
-
-  await User.findByIdAndUpdate(_id, { balance: currentBalance }, { new: true });
-
-  const data = await Transaction.create({
-    ...req.body,
-    owner: _id,
-    balance: currentBalance,
-    category: { id, name },
-  });
-  if (!data) throw RequestError(500, "Server error");
-
   res.status(201).json(data);
 };
 
