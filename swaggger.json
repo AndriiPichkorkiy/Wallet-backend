@@ -5,8 +5,12 @@
     "title": "Swagger S.W.A.T Wallet",
     "description": "It's Bible of API S.W.A.T Wallet based on OpenAPI 3.0.1"
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "servers": [
     {
       "url": "http://localhost:3001"
@@ -32,7 +36,9 @@
   "paths": {
     "/api/user/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User registration",
         "parameters": [],
         "requestBody": {
@@ -70,7 +76,9 @@
     },
     "/api/user/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User login",
         "parameters": [],
         "security": [
@@ -109,7 +117,9 @@
     },
     "/api/user/logout": {
       "get": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "User logout",
         "parameters": [],
         "security": [
@@ -138,7 +148,9 @@
     },
     "/api/user/current": {
       "get": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Get user's data by access token",
         "security": [
           {
@@ -170,7 +182,9 @@
     },
     "/api/user/": {
       "delete": {
-        "tags": ["Auth"],
+        "tags": [
+          "Auth"
+        ],
         "summary": "Delete user",
         "parameters": [],
         "security": [
@@ -209,7 +223,9 @@
     },
     "/api/transactions": {
       "post": {
-        "tags": ["Transactions"],
+        "tags": [
+          "Transactions"
+        ],
         "summary": "Create a new transaction",
         "security": [
           {
@@ -244,7 +260,7 @@
             "content": {}
           },
           "401": {
-            "description": "Not authorized",
+            "description": "Unauthorized",
             "content": {}
           },
           "500": {
@@ -256,7 +272,9 @@
     },
     "/api/transactions/getAll": {
       "get": {
-        "tags": ["Transactions"],
+        "tags": [
+          "Transactions"
+        ],
         "summary": "Get all user transactions",
         "security": [
           {
@@ -292,6 +310,10 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
           "500": {
             "description": "Server error",
             "content": {}
@@ -301,7 +323,9 @@
     },
     "/api/transactions/categories": {
       "get": {
-        "tags": ["Transactions"],
+        "tags": [
+          "Transactions"
+        ],
         "summary": "Get all categories and their id",
         "parameters": [],
         "responses": {
@@ -321,13 +345,68 @@
           }
         }
       }
+    },
+    "/api/transactions/statistics": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get statistics of income and expenses by category for a period of time",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "The year to get the statistics from, a number from 1967 to the current year's value."
+          },
+          {
+            "in": "query",
+            "name": "month",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Ordinal number of the month, from 1 to 12. Optional."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetStatistics"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
       "RegistrationRequest": {
         "type": "object",
-        "required": ["name", "email", "password"],
+        "required": [
+          "name",
+          "email",
+          "password"
+        ],
         "properties": {
           "name": {
             "type": "string",
@@ -370,7 +449,10 @@
       },
       "LoginRequest": {
         "type": "object",
-        "required": ["email", "password"],
+        "required": [
+          "email",
+          "password"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -396,7 +478,9 @@
       },
       "DeleteRequest": {
         "type": "object",
-        "required": ["email"],
+        "required": [
+          "email"
+        ],
         "properties": {
           "email": {
             "type": "string",
@@ -445,7 +529,12 @@
       },
       "CreatedTransactionRequest": {
         "type": "object",
-        "required": ["type", "amount", "category", "date"],
+        "required": [
+          "type",
+          "amount",
+          "category",
+          "date"
+        ],
         "properties": {
           "type": {
             "type": "boolean",
@@ -483,53 +572,61 @@
       },
       "CreatedTransactionResponse": {
         "type": "object",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Transaction identifier",
-              "example": "638b5a9ce8c94bc23ceefb32"
-            },
-            "owner": {
-              "type": "string",
-              "description": "The ID of the owner of the transaction",
-              "example": "638a338f9a43639507e794e4"
-            },
-            "type": {
-              "type": "boolean",
-              "description": "'true' - Incomes; 'false' - Expenses",
-              "example": true
-            },
-            "category": {
-              "type": "object",
-              "description": "Category ID and name",
-              "example": {
-                "id": 10502,
-                "name": "Inregular Income",
-                "_id": "638b5a9ce8c94bc23ceefb33"
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Transaction identifier",
+            "example": "638b5a9ce8c94bc23ceefb32"
+          },
+          "owner": {
+            "type": "string",
+            "description": "The ID of the owner of the transaction",
+            "example": "638a338f9a43639507e794e4"
+          },
+          "type": {
+            "type": "boolean",
+            "description": "'true' - Incomes; 'false' - Expenses",
+            "example": true
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Category object ID, internal identifier",
+                "example": "638b5a9ce8c94bc23ceefb32"
+              },
+              "id": {
+                "type": "number",
+                "description": "Category ID",
+                "example": 10502
+              },
+              "name": {
+                "type": "string",
+                "description": "Category name",
+                "example": "Inregular Income"
               }
-            },
-            "comment": {
-              "type": "string",
-              "description": "Clasification of the transaction",
-              "example": "Additional income"
-            },
-            "amount": {
-              "type": "number",
-              "description": "Transaction amount",
-              "example": 485.2
-            },
-            "balance": {
-              "type": "number",
-              "description": "Current transaction balance",
-              "example": 3344.55
-            },
-            "date": {
-              "type": "number",
-              "description": "Transaction creation date, ms",
-              "example": "2022-12-03T14:18:04.624+00:00"
             }
+          },
+          "comment": {
+            "type": "string",
+            "description": "Clasification of the transaction",
+            "example": "Additional income"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Transaction amount",
+            "example": 485.2
+          },
+          "balance": {
+            "type": "number",
+            "description": "Current transaction balance",
+            "example": 3344.55
+          },
+          "date": {
+            "type": "number",
+            "description": "Transaction creation date, ms",
+            "example": "2022-12-03T14:18:04.624+00:00"
           }
         },
         "example": {
@@ -548,53 +645,50 @@
         }
       },
       "GetAllTransactions": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "_id": {
-              "type": "string",
-              "description": "Transaction identifier",
-              "example": "638b5a9ce8c94bc23ceefb32"
-            },
-            "owner": {
-              "type": "string",
-              "description": "The ID of the owner of the transaction",
-              "example": "638a338f9a43639507e794e4"
-            },
-            "type": {
-              "type": "boolean",
-              "description": "'true' - Incomes; 'false' - Expenses",
-              "example": true
-            },
-            "category": {
-              "type": "object",
-              "description": "category ID and name",
-              "example": {
-                "id": 10502,
-                "name": "Inregular Income"
-              }
-            },
-            "comment": {
-              "type": "string",
-              "description": "Clasification of the transaction",
-              "example": "Additional income"
-            },
-            "amount": {
-              "type": "number",
-              "description": "Transaction amount",
-              "example": 485.2
-            },
-            "balance": {
-              "type": "number",
-              "description": "Current transaction balance",
-              "example": 3344.55
-            },
-            "date": {
-              "type": "number",
-              "description": "Transaction creation time",
-              "example": "2022-12-03T14:18:04.624+00:00"
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Transaction identifier",
+            "example": "638b5a9ce8c94bc23ceefb32"
+          },
+          "owner": {
+            "type": "string",
+            "description": "The ID of the owner of the transaction",
+            "example": "638a338f9a43639507e794e4"
+          },
+          "type": {
+            "type": "boolean",
+            "description": "'true' - Incomes; 'false' - Expenses",
+            "example": true
+          },
+          "category": {
+            "type": "object",
+            "description": "category ID and name",
+            "example": {
+              "id": 10502,
+              "name": "Inregular Income"
             }
+          },
+          "comment": {
+            "type": "string",
+            "description": "Clasification of the transaction",
+            "example": "Additional income"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Transaction amount",
+            "example": 485.2
+          },
+          "balance": {
+            "type": "number",
+            "description": "Current transaction balance",
+            "example": 3344.55
+          },
+          "date": {
+            "type": "number",
+            "description": "Transaction creation time",
+            "example": "2022-12-03T14:18:04.624+00:00"
           }
         },
         "example": [
@@ -640,20 +734,17 @@
         ]
       },
       "GetCategory": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "number",
-              "description": "Transaction Category ID",
-              "example": 10501
-            },
-            "name": {
-              "type": "string",
-              "description": "The name of the transaction category",
-              "example": "Regular Income"
-            }
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "description": "Transaction Category ID",
+            "example": 10501
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the transaction category",
+            "example": "Regular Income"
           }
         },
         "example": [
@@ -670,6 +761,78 @@
             "name": "Car"
           }
         ]
+      },
+      "GetStatistics": {
+        "type": "object",
+        "properties": {
+          "stats": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "description": "Transaction Category ID",
+                  "example": 10501
+                },
+                "name": {
+                  "type": "string",
+                  "description": "The name of the transaction category",
+                  "example": "Regular Income"
+                },
+                "quantity": {
+                  "type": "number",
+                  "description": "Expenses for the period in this category",
+                  "example": 1536.16
+                }
+              }
+            }
+          },
+          "totalStats": {
+            "type": "object",
+            "properties": {
+              "expenses": {
+                "type": "number",
+                "description": "Expenses for the period",
+                "example": 5670.59
+              },
+              "income": {
+                "type": "number",
+                "description": "Income for the period",
+                "example": 25443.15
+              },
+              "totalBalance": {
+                "type": "number",
+                "description": "User balance",
+                "example": 35358.36
+              }
+            }
+          }
+        },
+        "example": {
+          "stats": [
+            {
+              "id": 10102,
+              "name": "Products",
+              "quantity": 1536.16
+            },
+            {
+              "id": 10103,
+              "name": "Car",
+              "quantity": 2174.35
+            },
+            {
+              "id": 10106,
+              "name": "Household products",
+              "quantity": 1960.08
+            }
+          ],
+          "totalStats": {
+            "expenses": 5670.59,
+            "income": 18443.15,
+            "totalBalance": 21670.59
+          }
+        }
       }
     },
     "securitySchemes": {

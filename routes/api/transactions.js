@@ -20,7 +20,7 @@ router.get('/getAll', authenticate,  ctrlWrapper(ctrl.getAll))
 router.get('/categories', ctrlWrapper(ctrl.getCategories))
 
 // Отримання статистики по транзакціям за місяць(число) / рік(число) - якщо не вказали місяць. Без пагінації
-router.get('/statistics/', authenticate, ctrl.getStatistic)
+router.get('/statistics', authenticate, ctrl.getStatistic)
 
 
 module.exports = router;

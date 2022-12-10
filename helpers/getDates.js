@@ -36,7 +36,11 @@ const getDates = (year, month) => {
         const endDate = month === 12 ? new Date(year + 1, 0) : new Date(year, month);
         return { startDate, endDate }
     }
-    
+
+    // Якщо в параметрах передали тільки місяць, то рік обираємо поточний
+    const yearDefault = now.getFullYear();
+    const startDate = new Date(yearDefault, month-1);
+    return { startDate, endDate: now }
 }
 
 module.exports = getDates;
