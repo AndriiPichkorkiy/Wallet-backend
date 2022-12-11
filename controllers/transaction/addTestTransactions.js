@@ -8,7 +8,7 @@ const addTestTransactions = async (req, res) => {
     const { year=2022, month=11, day=1, number=1, sum } = req.query;
     const { _id, name: userName } = req.user;
 
-    if ( sum ) await User.findByIdAndUpdate(_id, {balance}, {new: true})
+    if ( sum ) await User.findByIdAndUpdate(_id, {balance: sum}, {new: true})
     let dateMs = new Date(year, month-1, day) - new Date(0);
 
    for (let i = 1; i <= (number); i += 1) {
