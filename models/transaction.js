@@ -29,7 +29,10 @@ const transactionSchema = new Schema({
         required: true,
         versionKey: false,
     },
-    comment: String,
+    comment: {
+        type: String,
+        
+    },
     amount: {
         type: Number,
         required: [true, 'Set the transaction amount']
@@ -50,7 +53,7 @@ const transactionSchema = new Schema({
 const schemaAdd = Joi.object({
     type: Joi.boolean().required(),
     category: Joi.number().integer().required(),
-    comment: Joi.string().max(240),
+    comment: Joi.string().min(0).max(240),
     amount: Joi.number().precision(2).min(0).max(1000000000).required(),
     date: Joi.date()
 });
