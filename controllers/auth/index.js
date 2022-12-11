@@ -5,6 +5,7 @@ const resendEmail = require("./resendEmail");
 const getCurrent = require("./getCurrent");
 const logout = require("./logout");
 const del = require("./delete");
+const getBalance = require("./getBalance");
 
 module.exports = {
   register,
@@ -14,4 +15,5 @@ module.exports = {
   getCurrent,
   logout,
   delete: del,
+  getBalance,
 };

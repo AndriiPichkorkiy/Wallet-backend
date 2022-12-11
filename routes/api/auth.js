@@ -29,4 +29,8 @@ router.post(
 router.get("/current", authenticate, ctrlWrapper(ctrl.getCurrent));
 router.get("/logout", authenticate, ctrlWrapper(ctrl.logout));
 
+// get balance
+
+router.get("/balance", authenticate, ctrlWrapper(ctrl.getBalance));
+
 module.exports = router;
