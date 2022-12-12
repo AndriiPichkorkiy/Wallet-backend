@@ -2,7 +2,9 @@ const { model, Schema } = require('mongoose');
 const Joi = require('joi');
 const { handleSaveErrors } = require('../helpers');
 
-const nowYear = new Date().getFullYear();
+// const now = new Date();
+// const nowYear = now.getFullYear(); 
+const startTime = new Date(0);
 
 const transactionSchema = new Schema({
     owner: {
@@ -45,7 +47,8 @@ const transactionSchema = new Schema({
 
     date: {
         type: Date,
-        required: [true, 'Set the transaction date']  
+        min: startTime,
+        required: [true, 'Set the transaction date']
     }
 },{ versionKey: false}
 );
@@ -53,9 +56,9 @@ const transactionSchema = new Schema({
 const schemaAdd = Joi.object({
     type: Joi.boolean().required(),
     category: Joi.number().integer().required(),
-    comment: Joi.string().min(0).max(240),
+    comment: Joi.string().min(0).max(250),
     amount: Joi.number().precision(2).min(0).max(1000000000).required(),
-    date: Joi.date()
+    date: Joi.date().min(0)
 });
 
 const schemaGetAll = Joi.object({
@@ -64,17 +67,18 @@ const schemaGetAll = Joi.object({
 });
 
 const schemaGetStatistic = Joi.object({
-    year: Joi.number().min(1970).max(nowYear),
+    year: Joi.number().min(0),
     month: Joi.number().min(1).max(12)
 });
 
 const schemaPostTestTransactions = Joi.object({
-    year: Joi.number().min(1970).max(nowYear),
+    year: Joi.number().min(0),
     month: Joi.number().min(1).max(12),
     day: Joi.number().min(1).max(31),
     number: Joi.number().min(1).max(120),
     sum: Joi.number().min(1).max(20000),
 })
+
 
 const schemasJoi = {
     schemaAdd,

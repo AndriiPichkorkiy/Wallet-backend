@@ -44,7 +44,7 @@ const addTestTransactions = async (req, res) => {
 
         // Перевіряємо, чи не перевищує значення дати поточного значення
         const now = new Date();
-        if (date >= now) throw RequestError(400, "Invalid date");
+        if (date > +now) throw RequestError(400, `'date' must be less than or equal to '${now.toISOString()}'`);
 
         await User.findByIdAndUpdate(_id, {balance: currentBalance}, {new: true})
         

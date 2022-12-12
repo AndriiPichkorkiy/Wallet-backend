@@ -8,7 +8,7 @@ const addTransaction = async (req, res) => {
 
   const { balance } = await User.findById(_id);
   if (balance === undefined) throw RequestError(500, "Server error");
-
+  console.log("req.body", req.body);
   const { category: id, date, type } = req.body;
   let { amount } = req.body;
   if (typeof amount === "string") amount = Number(amount);
@@ -22,10 +22,10 @@ const addTransaction = async (req, res) => {
   let currentBalance = type ? balance + amount : balance - amount;
 
   currentBalance = round(currentBalance);
-
+  
   // Перевіряємо, чи не перевищує значення дати поточного значення
   const now = new Date();
-  if (date >= now) throw RequestError(400, "Invalid date");
+  if (date > +now) throw RequestError(400, `'date' must be less than or equal to '${now.toISOString()}'`);
 
   await User.findByIdAndUpdate(_id, { balance: currentBalance }, { new: true });
 
