@@ -890,11 +890,6 @@
                 "type": "number",
                 "description": "Income for the period",
                 "example": 25443.15
-              },
-              "totalBalance": {
-                "type": "number",
-                "description": "User balance",
-                "example": 35358.36
               }
             }
           }
@@ -919,8 +914,7 @@
           ],
           "totalStats": {
             "expenses": 5670.59,
-            "income": 18443.15,
-            "totalBalance": 21670.59
+            "income": 18443.15
           }
         }
       },
