@@ -33,9 +33,6 @@ const getStatistic = async (req, res) => {
     },
   ]).sort({ categoryId: 1 });
 
-  const { balance: totalBalance } = await User.findById(_id);
-  if (totalBalance === undefined) throw RequestError(500, "Server error");
-
   const stats = [];
   let expenses = 0;
   let income = 0;
@@ -46,7 +43,7 @@ const getStatistic = async (req, res) => {
     if (Number(categoryId) > 10500) {
       income = round(income + quantity);
     } else {
-      expenses = round(expenses + obj.quantity);
+      expenses = round(expenses + quantity);
       stats.push({
         id: categoryId,
         name: categories.expenses[categoryId],
@@ -59,8 +56,7 @@ const getStatistic = async (req, res) => {
     stats,
     totalStats: {
       expenses,
-      income,
-      totalBalance,
+      income
     },
   });
 };
