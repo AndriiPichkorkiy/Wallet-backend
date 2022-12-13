@@ -730,98 +730,114 @@
       "GetAllTransactions": {
         "type": "object",
         "properties": {
-          "_id": {
-            "type": "string",
-            "description": "Transaction identifier",
-            "example": "638b5a9ce8c94bc23ceefb32"
+          "quantity": {
+            "type": "number",
+            "description": "Total number of transactions",
+            "example": 256
           },
-          "owner": {
-            "type": "string",
-            "description": "The ID of the owner of the transaction",
-            "example": "638a338f9a43639507e794e4"
-          },
-          "type": {
-            "type": "boolean",
-            "description": "'true' - Incomes; 'false' - Expenses",
-            "example": true
-          },
-          "category": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "number",
-                "description": "Category ID",
-                "example": 10502
-              },
-              "name": {
-                "type": "string",
-                "description": "Category name",
-                "example": "Inregular Income"
+          "transactions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "description": "Transaction identifier",
+                  "example": "638b5a9ce8c94bc23ceefb32"
+                },
+                "owner": {
+                  "type": "string",
+                  "description": "The ID of the owner of the transaction",
+                  "example": "638a338f9a43639507e794e4"
+                },
+                "type": {
+                  "type": "boolean",
+                  "description": "'true' - Incomes; 'false' - Expenses",
+                  "example": true
+                },
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "description": "Category ID",
+                      "example": 10502
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Category name",
+                      "example": "Inregular Income"
+                    }
+                  }
+                },
+                "comment": {
+                  "type": "string",
+                  "description": "Clasification of the transaction",
+                  "example": "Additional income"
+                },
+                "amount": {
+                  "type": "number",
+                  "description": "Transaction amount",
+                  "example": 485.2
+                },
+                "balance": {
+                  "type": "number",
+                  "description": "Current transaction balance",
+                  "example": 3344.55
+                },
+                "date": {
+                  "type": "number",
+                  "description": "Transaction creation time",
+                  "example": "2022-12-03T14:18:04.624+00:00"
+                }
               }
             }
-          },
-          "comment": {
-            "type": "string",
-            "description": "Clasification of the transaction",
-            "example": "Additional income"
-          },
-          "amount": {
-            "type": "number",
-            "description": "Transaction amount",
-            "example": 485.2
-          },
-          "balance": {
-            "type": "number",
-            "description": "Current transaction balance",
-            "example": 3344.55
-          },
-          "date": {
-            "type": "number",
-            "description": "Transaction creation time",
-            "example": "2022-12-03T14:18:04.624+00:00"
           }
         },
-        "example": [
-          {
-            "_id": "638f9d3524ab55cf14173279",
-            "owner": "638f9a8324ab55cf1417326e",
-            "type": false,
-            "category": {
-              "id": 10101,
-              "name": "Main expences"
+        "example": {
+          "quantity": 256,
+          "transactions": [
+            {
+              "_id": "638f9d3524ab55cf14173279",
+              "owner": "638f9a8324ab55cf1417326e",
+              "type": false,
+              "category": {
+                "id": 10101,
+                "name": "Main expences"
+              },
+              "comment": "Additional income",
+              "amount": 0.6,
+              "balance": 1999.4,
+              "date": "2022-12-03T14:18:04.624+00:00"
             },
-            "comment": "Additional income",
-            "amount": 0.6,
-            "balance": 1999.4,
-            "date": "2022-12-03T14:18:04.624+00:00"
-          },
-          {
-            "_id": "638fa12ae80b879f93f19a71",
-            "owner": "638f9a8324ab55cf1417326e",
-            "type": true,
-            "category": {
-              "id": 10502,
-              "name": "Inregular Income"
+            {
+              "_id": "638fa12ae80b879f93f19a71",
+              "owner": "638f9a8324ab55cf1417326e",
+              "type": true,
+              "category": {
+                "id": 10502,
+                "name": "Inregular Income"
+              },
+              "comment": "Additional income",
+              "amount": 5000.6,
+              "balance": 7000,
+              "date": "2022-12-03T14:20:07.624+00:00"
             },
-            "comment": "Additional income",
-            "amount": 5000.6,
-            "balance": 7000,
-            "date": "2022-12-03T14:20:07.624+00:00"
-          },
-          {
-            "_id": "638fb3b02784590e5d36cfe0",
-            "owner": "638f9a8324ab55cf1417326e",
-            "type": false,
-            "category": {
-              "id": 10102,
-              "name": "Inregular Income"
-            },
-            "comment": "Products",
-            "amount": 2500,
-            "balance": 4500,
-            "date": "2022-12-03T14:22:01.624+00:00"
-          }
-        ]
+            {
+              "_id": "638fb3b02784590e5d36cfe0",
+              "owner": "638f9a8324ab55cf1417326e",
+              "type": false,
+              "category": {
+                "id": 10102,
+                "name": "Inregular Income"
+              },
+              "comment": "Products",
+              "amount": 2500,
+              "balance": 4500,
+              "date": "2022-12-03T14:22:01.624+00:00"
+            }
+          ]
+        }
       },
       "GetCategory": {
         "type": "object",
