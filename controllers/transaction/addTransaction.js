@@ -8,7 +8,6 @@ const addTransaction = async (req, res) => {
 
   const { balance } = await User.findById(_id);
   if (balance === undefined) throw RequestError(500, "Server error");
-  console.log("req.body", req.body);
   const { category: id, date, type } = req.body;
   let { amount } = req.body;
   if (typeof amount === "string") amount = Number(amount);
