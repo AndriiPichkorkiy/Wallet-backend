@@ -4,7 +4,8 @@ const ctrlWrapper = require("./ctrlWrapper");
 const createVerifyEmail = require("./createVerifyEmail");
 const sendEmail = require("./sendEmail");
 const getDates = require("./getDates");
-const round = require('./round');
+const round = require("./round");
+const avatar = require("./createAvatar");
 
 module.exports = {
   RequestError,
@@ -13,5 +14,6 @@ module.exports = {
   createVerifyEmail,
   sendEmail,
   getDates,
-  round
+  round,
+  avatar,
 };

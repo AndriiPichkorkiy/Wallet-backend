@@ -49,7 +49,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      match: passwordRegex,
+
       minlength: 6,
       required: [true, "Set password for user"],
     },
@@ -66,6 +66,10 @@ const userSchema = new Schema(
       default: false,
     },
     verificationToken: {
+      type: String,
+      require: true,
+    },
+    avatar: {
       type: String,
       require: true,
     },
