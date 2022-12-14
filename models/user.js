@@ -3,13 +3,9 @@ const Joi = require("joi");
 const { handleSaveErrors } = require("../helpers");
 
 const emailRegex =
-  /^[^-][a-zA-Z0-9.!#$%&'*+=?^_`{|}~-][^-]{0,}\@[a-zA-Z0-9-]+((\.[a-zA-Z]{2,4})|(\.[a-zA-Z]{2,4}\.[a-zA-Z]{2,3}))$/;
+  /^[^-][a-zA-Z0-9.!#$%&'*+=?^_`{|}~-][^-]{0,}\@[a-zA-Z0-9-]+\.[a-zA-Z]{2,4}\.[a-zA-Z]{0,3}$/;
 
-const passwordRegex =
-  /^((?!<|>).)*$|^(?=.*[0-9])(?=.*[a-zA-Z])(?=\S+$).{6,16}$/;
-
-const nameRegex =
-  /^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]+(([' -][a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ ])?[a-zA-Zа-яА-Я]*)*$/;
+const passwordRegex = /(?!.*[<>])(?=.*[0-9])(?=.*[a-zA-Z])(?=\S+$).{6,12}$/;
 
 const emailJoiSchema = Joi.string()
   .pattern(emailRegex)
@@ -35,7 +31,6 @@ const userSchema = new Schema(
   {
     name: {
       type: String,
-      match: nameRegex,
       required: [true, "Name is required"],
       maxLength: 12,
     },
@@ -50,6 +45,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      match: passwordRegex,
       minlength: 6,
       required: [true, "Set password for user"],
     },
@@ -74,7 +70,7 @@ const userSchema = new Schema(
 );
 
 const registerSchema = Joi.object({
-  name: nameRegex,
+  name: Joi.string().required(),
   password: passwordJoiSchema,
   email: emailJoiSchema,
 });
