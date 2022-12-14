@@ -5,8 +5,7 @@ const { handleSaveErrors } = require("../helpers");
 const emailRegex =
   /^[^-][a-zA-Z0-9.!#$%&'*+=?^_`{|}~-][^-]{0,}\@[a-zA-Z0-9-]+((\.[a-zA-Z]{2,4})|(\.[a-zA-Z]{2,4}\.[a-zA-Z]{2,3}))$/;
 
-const passwordRegex =
-  /^((?!<|>).)*$|^(?=.*[0-9])(?=.*[a-zA-Z])(?=\S+$).{6,16}$/;
+const passwordRegex = /^(?!.*[<>])(?=.*[0-9])(?=.*[a-zA-Z])(?=\S+$).{6,12}$/;
 
 const nameRegex =
   /^[a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ]+(([' -][a-zA-Zа-щА-ЩЬьЮюЯяЇїІіЄєҐґ ])?[a-zA-Zа-яА-Я]*)*$/;
@@ -50,6 +49,7 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+
       minlength: 6,
       required: [true, "Set password for user"],
     },
@@ -66,6 +66,10 @@ const userSchema = new Schema(
       default: false,
     },
     verificationToken: {
+      type: String,
+      require: true,
+    },
+    avatar: {
       type: String,
       require: true,
     },
