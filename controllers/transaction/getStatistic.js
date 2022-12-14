@@ -51,7 +51,6 @@ const getStatistic = async (req, res) => {
       });
     }
   }
-
   res.json({
     stats,
     totalStats: {
