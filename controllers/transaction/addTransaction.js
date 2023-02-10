@@ -43,7 +43,7 @@ const addTransaction = async (req, res) => {
     balance: round(balanceDate),
     category: { id, name },
   });
-  if (!data) throw RequestError(500, "Server error");
+  if (!data) throw RequestError(500);
 
 
   // Тепер потрібно змінити баланс в усіх наступних картках на значення amount з урахуванням type
