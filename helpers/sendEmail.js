@@ -9,7 +9,6 @@ const sendEmail = async (data) => {
   const email = { ...data, from: EMAIL };
 
   const responseEmail = await sgMail.send(email);
-  console.log("responseEmail", responseEmail);
   return true;
 };
 
