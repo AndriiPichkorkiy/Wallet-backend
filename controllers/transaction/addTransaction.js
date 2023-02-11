@@ -6,9 +6,11 @@ const categories = require("../../data/categories");
 const addTransaction = async (req, res) => {
   const { _id } = req.user;
 
+  // Всякі перевірки
   const user = await User.findById(_id);
   const { balance } = user;
   if (balance === undefined) throw RequestError(500, "Server error");
+
   const { category: id, date, type } = req.body;
   let { amount } = req.body;
   if (typeof(amount) === "string") amount = Number(amount);
@@ -16,18 +18,12 @@ const addTransaction = async (req, res) => {
   const variety = type ? "income" : "expenses";
   const name = categories[variety][id];
   if (!name) throw RequestError(400, "No category with this type found");
+
   const dec = (amount * 10000) % 100;
   if (dec !== 0) throw RequestError(400, "More than 2 decimal places");
-
-  let currentBalance = type ? balance + amount : balance - amount;
-
-  currentBalance = round(currentBalance);
   
-  // Перевіряємо, чи не перевищує значення дати поточного значення
   const now = new Date();
   if (date > +now) throw RequestError(400, `'date' must be less than or equal to '${now.toISOString()}'`);
-
-  await User.findByIdAndUpdate(_id, { balance: currentBalance }, { new: true });
 
   //Якщо баланс більше 0, то є сенс знайти першу попередню картку від дати поточної транзакції і звідти витягти баланс
   let previousBalance = 0;
@@ -45,12 +41,13 @@ const addTransaction = async (req, res) => {
   });
   if (!data) throw RequestError(500);
 
-
-  // Тепер потрібно змінити баланс в усіх наступних картках на значення amount з урахуванням type
+  // Змінити баланс в усіх наступних картках на значення amount з урахуванням type
   const amountUpd = type ? amount : amount * (-1);
-  await Transaction.updateMany({owner: _id, date: { $gt: date }},[
-    { $set: { balance: { $add: ["$balance", amountUpd] } } },
-  ])
+  const params = [{ $set: { balance: {$round: [{ $add: ["$balance", amountUpd] }, 2]} } }];
+
+  await Transaction.updateMany({owner: _id, date: { $gt: date }}, params);
+
+  await User.findByIdAndUpdate(_id, params);
 
   res.status(201).json(data);
 };

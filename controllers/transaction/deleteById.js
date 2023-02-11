@@ -3,6 +3,8 @@ const { Transaction } = require("../../models/transaction");
 const { User } = require("../../models/user");
 
 const deleteById = async (req, res) => {
+    const { _id } = req.user;
+    console.log('_id', _id);
     //Видаляємо транзакцію
     const data = await Transaction.findByIdAndRemove(req.params.id);
     if (!data) throw RequestError(404);
