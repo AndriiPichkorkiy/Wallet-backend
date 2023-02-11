@@ -12,7 +12,7 @@ const deleteById = async (req, res) => {
     const amountUpd = !type ? amount : amount * (-1);
 
     //Параметер пошуку та заміни для наступних запитів
-    const params = [{ $set: { balance: { $add: ["$balance", amountUpd] } } }]
+    const params = [{ $set: { balance: {$round: [{ $add: ["$balance", amountUpd] }, 2]} } }]
 
     // Змінити баланс в усіх наступних картках на значення amount з урахуванням type
     await Transaction.updateMany({ owner, date: { $gt: date } }, params);
