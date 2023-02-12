@@ -397,6 +397,54 @@
         }
       }
     },
+    "/api/transactions/": {
+      "delete": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Delete a transaction by id.",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Numeric id of the transaction to delete"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeleteTransactionResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id format",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
     "/api/transactions/test": {
       "post": {
         "tags": [
@@ -932,6 +980,80 @@
             "expenses": 5670.59,
             "income": 18443.15
           }
+        }
+      },
+      "DeleteTransactionResponse": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Transaction identifier",
+            "example": "638b5a9ce8c94bc23ceefb32"
+          },
+          "owner": {
+            "type": "string",
+            "description": "The ID of the owner of the transaction",
+            "example": "638a338f9a43639507e794e4"
+          },
+          "type": {
+            "type": "boolean",
+            "description": "'true' - Incomes; 'false' - Expenses",
+            "example": true
+          },
+          "category": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Category object ID, internal identifier",
+                "example": "638b5a9ce8c94bc23ceefb32"
+              },
+              "id": {
+                "type": "number",
+                "description": "Category ID",
+                "example": 10502
+              },
+              "name": {
+                "type": "string",
+                "description": "Category name",
+                "example": "Inregular Income"
+              }
+            }
+          },
+          "comment": {
+            "type": "string",
+            "description": "Clasification of the transaction",
+            "example": "Additional income"
+          },
+          "amount": {
+            "type": "number",
+            "description": "Transaction amount",
+            "example": 485.2
+          },
+          "balance": {
+            "type": "number",
+            "description": "Current transaction balance",
+            "example": 3344.55
+          },
+          "date": {
+            "type": "number",
+            "description": "Transaction creation date, ms",
+            "example": "2022-12-03T14:18:04.624+00:00"
+          }
+        },
+        "example": {
+          "_id": "638b5a9ce8c94bc23ceefb33",
+          "owner": "638a338f9a43639507e794e4",
+          "type": true,
+          "category": {
+            "id": 10502,
+            "name": "Inregular Income",
+            "_id": "638b5a9ce8c94bc23ceefb33"
+          },
+          "comment": "Additional income",
+          "amount": 8750,
+          "balance": 3344.55,
+          "date": "2022-12-03T14:18:04.624+00:00"
         }
       },
       "CreatedTestTransactions": {

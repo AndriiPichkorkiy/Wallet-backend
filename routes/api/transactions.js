@@ -22,7 +22,6 @@ router.get('/categories', ctrlWrapper(ctrl.getCategories))
 router.get('/statistics', authenticate, validateParams(schemasJoi.schemaGetStatistic), ctrlWrapper(ctrl.getStatistic))
 
 // Видалення транзакції по ID. Перерахунок наступних транзакцій
-router.delete('/:id', authenticate, isValidId, ctrlWrapper(ctrl.deleteById));
-// router.delete('/:id', authenticate, ctrlWrapper(ctrl.deleteById));
+router.delete('/', authenticate, isValidId, ctrlWrapper(ctrl.deleteById));
 
 module.exports = router;
