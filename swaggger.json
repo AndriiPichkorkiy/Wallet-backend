@@ -31,6 +31,10 @@
     {
       "name": "Transactions",
       "description": "Transactions endpoints"
+    },
+    {
+      "name": "Service",
+      "description": "Service and test endpoints, database maintenance."
     }
   ],
   "paths": {
@@ -448,7 +452,7 @@
     "/api/transactions/test": {
       "post": {
         "tags": [
-          "Transactions"
+          "Service"
         ],
         "summary": "Automatic creation of user test transactions",
         "security": [
@@ -523,6 +527,27 @@
           },
           "500": {
             "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/transactions/revision": {
+      "delete": {
+        "tags": [
+          "Service"
+        ],
+        "summary": "Deleting transactions without an owner.",
+        "responses": {
+          "200": {
+            "description": "Success! Deleted <number> transactions without owner."
+          },
+          "404": {
+            "description": "No transactions found without an owner.",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error.",
             "content": {}
           }
         }

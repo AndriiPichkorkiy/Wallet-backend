@@ -8,7 +8,7 @@ const revision = async (_, res) => {
     const users = await User.find({}, "_id");
 
     // Перебираємо транзакції та шукаємо, у яких з них немає власника
-    const withOutOwner = [];
+    const withOutOwner = []; 
     transactions.forEach(t => {
         const include = users.find(user => `${user._id}` === `${t.owner}`);
         if (!include) withOutOwner.push(t.owner);
