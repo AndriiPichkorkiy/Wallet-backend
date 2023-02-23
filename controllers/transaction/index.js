@@ -4,6 +4,7 @@ const getCategories = require('./getCategories');
 const getStatistic = require('./getStatistic');
 const addTestTransactions = require('./addTestTransactions');
 const deleteById = require("./deleteById");
+const revision = require("./revision");
 
 module.exports = {
     getAll,
@@ -11,5 +12,6 @@ module.exports = {
     getCategories,
     getStatistic,
     addTestTransactions,
-    deleteById
+    deleteById,
+    revision
 }

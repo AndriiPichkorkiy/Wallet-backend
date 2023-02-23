@@ -24,4 +24,7 @@ router.get('/statistics', authenticate, validateParams(schemasJoi.schemaGetStati
 // Видалення транзакції по ID. Перерахунок наступних транзакцій
 router.delete('/', authenticate, isValidId, ctrlWrapper(ctrl.deleteById));
 
+// Видалення транзакції по ID. Перерахунок наступних транзакцій
+router.delete('/revision', ctrlWrapper(ctrl.revision));
+
 module.exports = router;
